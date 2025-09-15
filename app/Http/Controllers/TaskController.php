@@ -7,7 +7,8 @@ use App\Application\Task\UseCases\DeleteTask;
 use App\Application\Task\UseCases\GetTasks;
 use App\Application\Task\UseCases\GetTask;
 use App\Application\Task\UseCases\UpdateTask;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 
 class TaskController extends Controller
 {
@@ -29,7 +30,7 @@ class TaskController extends Controller
             : response()->json(['message' => 'Task not found'], 404);
     }
 
-    public function createTask(Request $request, CreateTask $usecase)
+    public function createTask(CreateTaskRequest $request, CreateTask $usecase)
     {
         $task = $usecase->execute(
             $request->input('title'),
@@ -39,7 +40,7 @@ class TaskController extends Controller
         return response()->json($task->toArray(), 201);
     }
 
-    public function updateTask(Request $request, UpdateTask $usecase)
+    public function updateTask(UpdateTaskRequest $request, UpdateTask $usecase)
     {
         $task = $usecase->execute(
             $request->input('id'),
