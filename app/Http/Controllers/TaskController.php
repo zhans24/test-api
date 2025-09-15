@@ -40,10 +40,10 @@ class TaskController extends Controller
         return response()->json($task->toArray(), 201);
     }
 
-    public function updateTask(UpdateTaskRequest $request, UpdateTask $usecase)
+    public function updateTask(int $id, UpdateTaskRequest $request, UpdateTask $usecase)
     {
         $task = $usecase->execute(
-            $request->input('id'),
+            $id,
             $request->input('title'),
             $request->input('description'),
             $request->input('status')
@@ -53,6 +53,7 @@ class TaskController extends Controller
             ? response()->json($task->toArray())
             : response()->json(['message' => 'Task not found'], 404);
     }
+
 
     public function deleteTask(int $id, DeleteTask $usecase)
     {
