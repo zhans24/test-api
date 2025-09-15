@@ -9,6 +9,6 @@ interface TaskRepositoryInterface
     public function getAll() : array;
     function getById($id) : ?Task;
     function deleteById($id) : void;
-    function updateById($id, $data) : bool;
-    function save($data) : Task;
+    function update(Task $task) : ?Task;
+    function save(Task $task) : Task;
 }
