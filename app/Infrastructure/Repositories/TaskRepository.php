@@ -5,6 +5,7 @@ namespace App\Infrastructure\Repositories;
 use App\Domain\Entities\Task as EntityTask;
 use App\Domain\Interfaces\TaskRepositoryInterface;
 use App\Infrastructure\Models\Task as EloquentTask;
+use Illuminate\Support\Facades\Log;
 
 class TaskRepository implements TaskRepositoryInterface
 {

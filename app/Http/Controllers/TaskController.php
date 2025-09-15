@@ -13,21 +13,50 @@ class TaskController extends Controller
 {
     public function index(GetTasks $usecase)
     {
-        return response()->json($usecase->execute());
+        $tasks = $usecase->execute();
+
+        return response()->json(
+            array_map(fn($task) => $task->toArray(), $tasks)
+        );
     }
 
-    public function getTask(int $id, GetTask $usecase){
-        return response()->json([$usecase->execute($id)]);
+    public function getTask(int $id, GetTask $usecase)
+    {
+        $task = $usecase->execute($id);
+
+        return $task
+            ? response()->json($task->toArray())
+            : response()->json(['message' => 'Task not found'], 404);
     }
 
-    public function createTask(Request $request, CreateTask $usecase){
-        return response()->json([$usecase->execute($request->input('title'), $request->input('description'))]);
+    public function createTask(Request $request, CreateTask $usecase)
+    {
+        $task = $usecase->execute(
+            $request->input('title'),
+            $request->input('description')
+        );
+
+        return response()->json($task->toArray(), 201);
     }
-    public function updateTask(Request $request, UpdateTask $usecase){
-        return response()->json($usecase->execute($request->input('id'),$request->input('title'), $request->input('description'),$request->input('status')));
+
+    public function updateTask(Request $request, UpdateTask $usecase)
+    {
+        $task = $usecase->execute(
+            $request->input('id'),
+            $request->input('title'),
+            $request->input('description'),
+            $request->input('status')
+        );
+
+        return $task
+            ? response()->json($task->toArray())
+            : response()->json(['message' => 'Task not found'], 404);
     }
-    public function deleteTask(int $id, DeleteTask $usecase){
+
+    public function deleteTask(int $id, DeleteTask $usecase)
+    {
         $usecase->execute($id);
+
         return response()->json(['message' => 'Task deleted']);
     }
 }

@@ -54,4 +54,15 @@ class Task
     public function getStatus(): bool {
         return $this->status;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->status,
+        ];
+    }
+
 }
