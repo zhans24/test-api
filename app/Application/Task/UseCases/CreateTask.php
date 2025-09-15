@@ -3,11 +3,11 @@
 namespace App\Application\Task\UseCases;
 
 use App\Domain\Entities\Task;
-use App\Infrastructure\Repositories\TaskRepository;
+use App\Domain\Interfaces\TaskRepositoryInterface;
 
 class CreateTask
 {
-    public function __construct(private TaskRepository $taskRepository)
+    public function __construct(private TaskRepositoryInterface $taskRepository)
     {}
 
     public function execute(string $title,string $description) : Task
